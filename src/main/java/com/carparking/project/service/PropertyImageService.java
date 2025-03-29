@@ -25,6 +25,10 @@ public class PropertyImageService {
         propertyImageEntity.setRatePerHour(propertyImageDto.getRatePerHour());
         propertyImageEntity.setAdminMailId(propertyImageDto.getAdminMailId());
         propertyImageEntity.setOwnerPhoneNum(propertyImageDto.getOwnerPhoneNum());
+        propertyImageEntity.setCity(propertyImageDto.getCity());
+        propertyImageEntity.setState(propertyImageDto.getState());
+        propertyImageEntity.setDistrict(propertyImageDto.getDistrict());
+        propertyImageEntity.setCountry(propertyImageDto.getCountry());
         propertyImageRepository.save(propertyImageEntity);
         return "Image uploaded successfully!";
     }

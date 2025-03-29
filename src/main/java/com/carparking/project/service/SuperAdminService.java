@@ -1,13 +1,11 @@
 package com.carparking.project.service;
 
-import com.carparking.project.entities.Slots;
-import com.carparking.project.entities.User;
-import com.carparking.project.repository.LoginRepository;
-import com.carparking.project.repository.SuperAdminRepository;
+import com.carparking.project.domain.SlotUpdateDto;
+import com.carparking.project.entities.*;
+import com.carparking.project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 @Service
@@ -15,6 +13,9 @@ public class SuperAdminService {
 
     @Autowired
     private SuperAdminRepository superAdminRepository;
+
+    @Autowired
+    SlotsRepository slotsRepository;
 
     @Autowired
     LoginRepository loginRepository;
@@ -39,13 +40,18 @@ public class SuperAdminService {
             map.put("district", slot.getDistrict());
             map.put("state", slot.getState());
             map.put("country", slot.getCountry());
-            map.put("slotAvailability", slot.isSlotAvailability());
             map.put("googleLocation", slot.getGoogleLocation());
             map.put("adminName", slot.getAdminName());
             map.put("adminPhone", slot.getAdminPhone());
             map.put("propertyType", slot.getPropertyType());
             map.put("adminMailId", slot.getAdminMailId());
-            map.put("vehicleNum", slot.getVehicleNum());
+            map.put("x", slot.getX());
+            map.put("y", slot.getY());
+            map.put("height", slot.getHeight());
+            map.put("width", slot.getWidth());
+            map.put("ranges", slot.getRanges());
+            map.put("sheetId", slot.getSheetId());
+
 
             // RoleStaging fields
             map.put("roleName", row[1]);
@@ -55,6 +61,11 @@ public class SuperAdminService {
             map.put("duration", row[3]);
             map.put("charge", row[4]);
 
+            //property_image
+            map.put("propertyDesc", row[5]);
+            map.put("propertyOwner", row[6]);
+            map.put("ownerPhoneNum", row[7]);
+
             formattedResults.add(map);
         }
         return formattedResults;
@@ -62,17 +73,40 @@ public class SuperAdminService {
 
     public String acceptPropertyDetails(String email) throws Exception {
         User user = loginRepository.findByEmail(email);
-        if(Objects.nonNull(user)){
+        if (Objects.nonNull(user)) {
             emailService.sendEmailAdmin(user);
             return "Successfully mailed";
-        }
-        else{
+        } else {
             throw new Exception("No User");
         }
     }
 
-    public String rejectPropertyDetails(String email){
+    public String rejectPropertyDetails(String email) {
         return "";
     }
+
+    public String updateSlotData(SlotUpdateDto slotUpdateDto) {
+        Optional<Slots> optionalSlot = slotsRepository.findById(slotUpdateDto.getSlotId());
+
+        if (optionalSlot.isPresent()) {
+            Slots slot = optionalSlot.get();
+
+            // Update the fields
+            slot.setX(slotUpdateDto.getX());
+            slot.setY(slotUpdateDto.getY());
+            slot.setHeight(slotUpdateDto.getHeight());
+            slot.setWidth(slotUpdateDto.getWidth());
+            slot.setRanges(slotUpdateDto.getRanges() != null ? slotUpdateDto.getRanges().toString() : null);
+            slot.setSheetId(slotUpdateDto.getSheetId());
+
+            // Save the updated slot
+            slotsRepository.save(slot);
+
+            return "Slot data updated successfully";
+        } else {
+            return "Slot not found";
+        }
+    }
+
 }
 

@@ -27,6 +27,10 @@ public class ProfileDto {
     private String fuelType;
     private String vehicleClr;
     private String vehicleGene;
+    private String endtime;
+    private String remainingtime;
+
+    private Integer slotId;
 
     private String password;
 
@@ -237,5 +241,29 @@ public class ProfileDto {
 
     public void setVehicleGene(String vehicleGene) {
         this.vehicleGene = vehicleGene;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
+    public String getRemainingtime() {
+        return remainingtime;
+    }
+
+    public void setRemainingtime(String remainingtime) {
+        this.remainingtime = remainingtime;
+    }
+
+    public Integer getSlotId() {
+        return slotId;
+    }
+
+    public void setSlotId(Integer slotId) {
+        this.slotId = slotId;
     }
 }

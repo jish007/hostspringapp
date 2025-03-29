@@ -36,6 +36,8 @@ public class Profile {
     private String fuelType;
     private String vehicleClr;
     private String vehicleGene;
+    private String endtime;
+    private String remainingtime;
 
     public String getVehicleNumber() {
         return vehicleNumber;
@@ -235,5 +237,21 @@ public class Profile {
 
     public void setVehicleGene(String vehicleGene) {
         this.vehicleGene = vehicleGene;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
+    public String getRemainingtime() {
+        return remainingtime;
+    }
+
+    public void setRemainingtime(String remainingtime) {
+        this.remainingtime = remainingtime;
     }
 }

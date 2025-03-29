@@ -1,5 +1,6 @@
 package com.carparking.project;
 
+import com.carparking.project.domain.SlotUpdateDto;
 import com.carparking.project.service.SuperAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,16 @@ public class SuperAdminController {
     @GetMapping("reject-property-details")
     public String rejectCredentials(@RequestParam String email){
         return superAdminService.rejectPropertyDetails(email);
+    }
+
+    @PutMapping("update-property-details")
+    public ResponseEntity<String> updatePropertyDetails(@RequestBody SlotUpdateDto slotUpdateDto) {
+        try {
+            String result = superAdminService.updateSlotData(slotUpdateDto);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error updating slot data: " + e.getMessage());
+        }
     }
 }
 

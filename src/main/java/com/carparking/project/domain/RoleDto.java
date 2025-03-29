@@ -8,6 +8,8 @@ public class RoleDto {
 
     private String adminMailId;
 
+    public RoleDto() {}
+
     public RoleDto(String roleName, String responsibilities) {
         this.roleName = roleName;
         this.responsibilities = responsibilities;

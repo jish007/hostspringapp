@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface PropertyImageRepository extends CrudRepository<PropertyImageEntity, Long> {
     List<PropertyImageEntity> findByPropertyName(String propertyName);
+
 }
 

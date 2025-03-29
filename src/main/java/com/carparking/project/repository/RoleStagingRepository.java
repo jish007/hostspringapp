@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RoleStagingRepository extends CrudRepository<RoleStaging,Void> {
+
 }

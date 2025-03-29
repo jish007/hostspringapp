@@ -39,7 +39,7 @@ public class ImageService {
     public static void getImage(){
         try {
             // ESP32-CAM snapshot URL
-            String snapshotUrl = "http://192.168.146.200:8080/shot.jpg";
+            String snapshotUrl = "http://192.168.74.153:8080/shot.jpg";
 
             // Create URL object
             URL url = new URL(snapshotUrl);
@@ -78,7 +78,7 @@ public class ImageService {
     }
 
     public static String getVehicleNumber() {
-        //getImage();
+        getImage();
         String userHome = System.getProperty("user.home");
         String documentsPath = userHome + File.separator + "Documents";
         File imageFile = new File(documentsPath, "snapshot.jpg");

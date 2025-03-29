@@ -34,7 +34,6 @@ public class AdruinoService {
 
     public String getSlot(Map<String, String> requestParams) throws Exception {
         System.out.println("I am in" + requestParams);
-        //return "1gokul";
         String vehicleno = imageService.getVehicleNumber();
         vehicleno = vehicleno.replaceAll("\\s+", "").toLowerCase();
         System.out.println(vehicleno);

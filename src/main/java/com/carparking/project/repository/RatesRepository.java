@@ -13,4 +13,5 @@ public interface RatesRepository extends CrudRepository<Rates,Integer> {
 
     @Query("SELECT r FROM Rates r WHERE r.adminMailId = :emailid")
     public List<Rates> getAllRates(String emailid);
+
 }
