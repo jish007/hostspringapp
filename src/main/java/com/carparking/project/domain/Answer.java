@@ -9,6 +9,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class Answer {
     @JsonProperty("name")
     private String name;
+    @JsonProperty("order")
+    private String order;
+    @JsonProperty("text")
+    private String text;
+    @JsonProperty("type")
+    private String type;
+    @JsonProperty("answer")
+    private JsonNode answer;
+    @JsonProperty("sublabels")
+    private String sublabels;
+    @JsonProperty("prettyFormat")
+    private String prettyFormat;
+    @JsonProperty("vehicleNumber")
+    private String vehicleNumber;
 
     @Override
     public String toString() {
@@ -23,27 +37,6 @@ public class Answer {
                 ", vehicleNumber='" + vehicleNumber + '\'' +
                 '}';
     }
-
-    @JsonProperty("order")
-    private String order;
-
-    @JsonProperty("text")
-    private String text;
-
-    @JsonProperty("type")
-    private String type;
-
-    @JsonProperty("answer")
-    private JsonNode answer;
-
-    @JsonProperty("sublabels")
-    private String sublabels;
-
-    @JsonProperty("prettyFormat")
-    private String prettyFormat;
-
-    @JsonProperty("vehicleNumber")
-    private String vehicleNumber;
 
     public String getName() {
         return name;

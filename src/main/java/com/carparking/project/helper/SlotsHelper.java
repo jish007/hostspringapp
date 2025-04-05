@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -46,9 +47,15 @@ public class SlotsHelper {
 
         Slots slot = availableSlots.poll();
 
-        LocalDateTime startTime = LocalDateTime.now();
-        LocalDateTime endTime = startTime.plusHours(1);
-        slotsRepository.updateSlotAvailability(slot.getSlotId(), false, vehicleNum,startTime.toString(),endTime.toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        String startTime = currentTime.format(formatter);
+
+        LocalDateTime exitDateTime = currentTime.plusHours(1);
+        String exitTime = exitDateTime.format(formatter);
+
+        slotsRepository.updateSlotAvailability(slot.getSlotId(), false, vehicleNum,startTime,exitTime);
 
         return slot;
     }

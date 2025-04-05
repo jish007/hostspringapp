@@ -78,7 +78,7 @@ public class ImageService {
     }
 
     public static String getVehicleNumber() {
-        getImage();
+        //getImage();
         String userHome = System.getProperty("user.home");
         String documentsPath = userHome + File.separator + "Documents";
         File imageFile = new File(documentsPath, "snapshot.jpg");
@@ -126,8 +126,4 @@ public class ImageService {
         }
         return null;
     }
-
-
-
-
 }

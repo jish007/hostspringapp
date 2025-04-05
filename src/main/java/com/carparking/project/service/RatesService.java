@@ -32,7 +32,7 @@ public class RatesService {
         return rates;
     }
 
-    public List<Rates>getRatesAll(String emailid){
-        return ratesRepository.getAllRates(emailid);
+    public Rates getRates(String emailid) {
+        return ratesRepository.findByAdminMailId(emailid);
     }
 }

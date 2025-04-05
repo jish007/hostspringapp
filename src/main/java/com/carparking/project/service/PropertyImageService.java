@@ -38,6 +38,7 @@ public class PropertyImageService {
     }
 
     public List<PropertyImageEntity> getAllProperty(){
-        return (List<PropertyImageEntity>) propertyImageRepository.findAll();
+        List<PropertyImageEntity> allProperties = (List<PropertyImageEntity>) propertyImageRepository.findAll();
+        return allProperties.stream().filter(PropertyImageEntity::isVerified).toList();
     }
 }

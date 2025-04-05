@@ -14,9 +14,6 @@ public class AdminController {
     @Autowired
    private LoginService adminService;
 
-    @Autowired
-    ImageService imageService;
-
     @PostMapping("/login")
     @CrossOrigin("*")
     public ResponseEntity<User> login(@RequestBody UserDto userDto) throws Exception {

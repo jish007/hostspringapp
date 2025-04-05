@@ -14,25 +14,4 @@ import java.util.stream.Collectors;
 @Component
 public class ProfileScheduler {
 
-    @Autowired
-    ProfileService profileService;
-
-    @Autowired
-    SlotsService slotsService;
-
-    @Scheduled(cron = "0 30 * * * ?")
-    public void updateProfile() throws JsonProcessingException {
-    System.out.println("updation from qr code started");
-       List<Profile> profiles =  profileService.getProfiles();
-       Map<String,String> sheetmap=  slotsService.getAllSlots(slotsService.getActiveUser()).stream().collect(Collectors.toMap(Slots::getSlotNumber,Slots::getSheetId));
-       List<String> slotsallocated =  profiles.stream().map(p->p.getAllocatedSlotNumber()).collect(Collectors.toList());
-       slotsallocated.stream().forEach(slotsallocate-> {
-           try {
-                profileService.updateProfile(sheetmap.get(slotsallocate));
-           } catch (JsonProcessingException e) {
-               e.printStackTrace();
-           }
-       });
-
-    }
 }

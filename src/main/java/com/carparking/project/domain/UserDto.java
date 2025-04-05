@@ -12,6 +12,7 @@ public class UserDto {
 
     private String remarks;
 
+    private boolean isBanned;
 
 
     public String getEmail() {
@@ -68,5 +69,13 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
     }
 }

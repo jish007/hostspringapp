@@ -26,6 +26,18 @@ public class EmailService {
 
     }
 
+    public void sendRejectionMail(String email, String reason){
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("007parkit@gmail.com");  // Replace with your email
+        message.setTo(email);
+        message.setSubject("Sorry your application has been rejected");
+        message.setText("Your application has been rejected because " +reason+ " please go to our official website and register again or contact us");
+
+        mailSender.send(message);
+
+    }
+
     public void sendEmailUser(User login){
 
         SimpleMailMessage message = new SimpleMailMessage();

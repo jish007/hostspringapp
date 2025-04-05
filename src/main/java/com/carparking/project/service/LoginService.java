@@ -58,5 +58,4 @@ public class LoginService {
         loginRepository.save(login.get());
         return "logout succesfull";
     }
-
 }

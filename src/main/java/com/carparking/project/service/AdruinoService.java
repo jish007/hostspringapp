@@ -38,10 +38,11 @@ public class AdruinoService {
         vehicleno = vehicleno.replaceAll("\\s+", "").toLowerCase();
         System.out.println(vehicleno);
         Optional<Profile> profile = Optional.ofNullable(profileService.getProfileByVehicleNumber(vehicleno));
-        if (profile.isPresent()) {
+        Profile profile2 = profileService.getProfileByVehicleNumber(vehicleno);
+        if (profile.isPresent() && profile2.getAllocatedSlotNumber() != null) {
             Profile profile1 = profileService.getProfileByVehicleNumber(vehicleno);
             return "1"+profile1.getUserName().toString();
-        } else if (slotsService.isAvailableSlot()) {
+        } else if (slotsService.isAvailableSlot() && !profile.isPresent()) {
             Slots slots = slotsHelper.parkCar(vehicleno);
             profileService.saveOnSiteProfile(vehicleno, slots, "ON-SITE");
             return "up"+slots.getSlotNumber();

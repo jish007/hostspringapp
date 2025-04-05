@@ -21,6 +21,9 @@ public class SuperAdminService {
     LoginRepository loginRepository;
 
     @Autowired
+    PropertyImageRepository propertyImageRepository;
+
+    @Autowired
     private EmailService emailService;
 
     public List<Map<String, Object>> getJoinedData() {
@@ -74,6 +77,7 @@ public class SuperAdminService {
     public String acceptPropertyDetails(String email) throws Exception {
         User user = loginRepository.findByEmail(email);
         if (Objects.nonNull(user)) {
+            propertyImageRepository.updateVerified(email,true);
             emailService.sendEmailAdmin(user);
             return "Successfully mailed";
         } else {
@@ -81,8 +85,9 @@ public class SuperAdminService {
         }
     }
 
-    public String rejectPropertyDetails(String email) {
-        return "";
+    public String rejectPropertyDetails(String adminMailId, String reason) throws Exception{
+        emailService.sendRejectionMail(adminMailId,reason);
+        return "Rejected application";
     }
 
     public String updateSlotData(SlotUpdateDto slotUpdateDto) {

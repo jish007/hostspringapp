@@ -24,6 +24,8 @@ public class User {
     private String roleName;
     @Column(name="remarks")
     private String remarks;
+    @Column(name = "is_banned")
+    private boolean isBanned;
 
     public User(){
 
@@ -88,4 +90,11 @@ public class User {
         this.password = passWord;
     }
 
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
+    }
 }

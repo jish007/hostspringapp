@@ -15,6 +15,7 @@ public class PropertyImage {
     private String district;
     private String state;
     private String country;
+    private boolean verified;
 
     // Default constructor
     public PropertyImage() {}
@@ -138,5 +139,13 @@ public class PropertyImage {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 }

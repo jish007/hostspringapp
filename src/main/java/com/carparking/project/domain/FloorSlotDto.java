@@ -7,9 +7,7 @@ public class FloorSlotDto {
     private List<String> slotNumber;
     private String floor;
     private List<String> vehicleType; // Added vehicleType
-    private Map<String,String> sheetMap;
-
-    public FloorSlotDto() {}
+    private Map<String, String> sheetMap;
 
     public FloorSlotDto(List<String> slotNumber, String floor, List<String> vehicleType, Map<String, String> sheetMap) {
         this.slotNumber = slotNumber;

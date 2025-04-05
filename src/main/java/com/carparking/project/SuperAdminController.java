@@ -28,8 +28,8 @@ public class SuperAdminController {
     }
 
     @GetMapping("reject-property-details")
-    public String rejectCredentials(@RequestParam String email){
-        return superAdminService.rejectPropertyDetails(email);
+    public String rejectCredentials(@RequestParam String email, String reason) throws Exception{
+        return superAdminService.rejectPropertyDetails(email,reason);
     }
 
     @PutMapping("update-property-details")
