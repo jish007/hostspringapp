@@ -94,7 +94,7 @@ public class ProfileTest {
                 .andReturn();
         String responseBody = result.getResponse().getContentAsString();
         Assertions.assertTrue(responseBody.contains("up"),responseBody);
-        String response = profileService.updateProfile();
+        String response = profileService.updateProfile("gokulgnair777@gmail.com");
         Assertions.assertEquals(response,"Successfully completed");
         System.out.println("Response: " + responseBody);
     }

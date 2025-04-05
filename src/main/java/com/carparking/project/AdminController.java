@@ -22,7 +22,7 @@ public class AdminController {
 
     @GetMapping("/logout")
     @CrossOrigin("*")
-    public ResponseEntity<String> logout(@RequestParam String emailid) throws Exception {
-        return ResponseEntity.ok(adminService.logout(emailid));
+    public ResponseEntity<String> logout(@RequestParam String adminMailId) throws Exception {
+        return ResponseEntity.ok(adminService.logout(adminMailId));
     }
 }

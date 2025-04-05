@@ -83,7 +83,7 @@ public class ProfileService {
     }
 
     //for app users
-    public String saveProfile(ProfileDto profileDto) throws Exception{
+    public String saveProfile(ProfileDto profileDto) throws Exception {
         Profile entity = new Profile();
         entity.setVehicleNumber(profileDto.getVehicleNumber());
         entity.setUserName(profileDto.getUserName());
@@ -111,16 +111,15 @@ public class ProfileService {
 
         User user = loginRepository.save(new User(userDto));
         Profile profile = profileRepository.save(entity);
-        if(Objects.nonNull(user) && Objects.nonNull(profile)){
+        if (Objects.nonNull(user) && Objects.nonNull(profile)) {
             return "User Is Created";
-        }
-        else{
+        } else {
             throw new Exception("User Creation Failed");
         }
     }
 
     //for on-site users
-    public void saveOnSiteProfile(String vehicleNumber, Slots slots, String bookingSource) throws Exception{
+    public void saveOnSiteProfile(String vehicleNumber, Slots slots, String bookingSource) throws Exception {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -145,7 +144,6 @@ public class ProfileService {
         Rates rates = ratesService.getRates(slots.getAdminMailId());
 
 
-
         Profile profile = new Profile();
         profile.setVehicleNumber(vehicleNumber);
         profile.setVehicleType("car");
@@ -166,10 +164,9 @@ public class ProfileService {
         profile.setFineAmount((double) 0);
 
         Profile obj = profileRepository.save(profile);
-        if (Objects.nonNull(obj)){
+        if (Objects.nonNull(obj)) {
             System.out.println("On site profile created");
-        }
-        else {
+        } else {
             throw new Exception("On-Site profile creation failed");
         }
     }
@@ -186,15 +183,17 @@ public class ProfileService {
         return profileRepository.findByVehicleNumber(vehicleNumber);
     }
 
-    public List<Profile> getProfiles(){
+    public List<Profile> getProfiles() {
         List<Profile> list = new ArrayList<>();
         profileRepository.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
 
-    public String updateProfile() throws Exception {
-        Slots slots = StreamSupport
-                .stream(slotsRepository.findAll().spliterator(), false)
+    public String updateProfile(String adminMailId) throws Exception {
+
+
+        Slots slots = slotsRepository.findByAdminMailId(adminMailId)
+                .stream()
                 .findFirst()
                 .orElse(null);
 
@@ -230,7 +229,7 @@ public class ProfileService {
 
         String userNameValue = userName.getAnswer().toString().replaceAll("\\s", "").replace("\"", "");
         String emailValue = email.getAnswer().toString().replaceAll("\\s", "").replace("\"", "");
-        String phoneNumberValue= phoneNumber.getAnswer().toString().replaceAll("\\s", "").replace("\"", "");
+        String phoneNumberValue = phoneNumber.getAnswer().toString().replaceAll("\\s", "").replace("\"", "");
         String vehicleNumberValue = vehicleNumberField.getAnswer().toString().replaceAll("\\s", "").replace("\"", "").toLowerCase();
         String vehicleTypeValue = vehicleType.getAnswer().toString().replaceAll("\\s", "").replace("\"", "").toLowerCase();
         String vehicleGeneValue = vehicleGene.getAnswer().toString().replaceAll("\\s", "").replace("\"", "");
@@ -268,8 +267,8 @@ public class ProfileService {
             UserDto userDto = new UserDto();
             userDto.setEmail(emailValue);
             userDto.setRoleName("USER");
-            userDto.setPassword(userNameValue + "@" + (int)(Math.random() * 10000));
-            loginService.signUp(userDto,"USER");
+            userDto.setPassword(userNameValue + "@" + (int) (Math.random() * 10000));
+            loginService.signUp(userDto, "USER");
 
 
         } catch (Exception e) {
@@ -285,8 +284,7 @@ public class ProfileService {
         try {
             result = profiles.stream()
                     .collect(Collectors.toMap(Profile::getVehicleNumber, p -> duration(currentDate, convertToLocalDateTime(LocalDateTime.parse(p.getEndtime(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")).toLocalTime(), currentDate.toLocalDate()))));
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return result;
@@ -302,7 +300,7 @@ public class ProfileService {
         long minutes = remainingDuration.toMinutes() % 60;
         long seconds = remainingDuration.getSeconds() % 60;
         System.out.println(String.format("%02d hours, %02d minutes, %02d seconds", hours, minutes, seconds));
-        String output =  String.format("%02d hours, %02d minutes, %02d seconds", hours, minutes, seconds);
+        String output = String.format("%02d hours, %02d minutes, %02d seconds", hours, minutes, seconds);
         return output;
     }
 
@@ -318,7 +316,7 @@ public class ProfileService {
         return "failed";
     }
 
-    public String rechargeProfile(String vehiclenumber, String duration, Double fare){
+    public String rechargeProfile(String vehiclenumber, String duration, Double fare) {
         try {
             Profile profile = profileRepository.findByVehicleNumber(vehiclenumber);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -327,8 +325,8 @@ public class ProfileService {
 
             String formattedDateTime = newDateTime.format(formatter);
 
-          //  LocalDateTime startTime = LocalDateTime.parse(profile.getBookingDate(), formatter);
-           // LocalDateTime endTime = LocalDateTime.parse(formattedDateTime);
+            //  LocalDateTime startTime = LocalDateTime.parse(profile.getBookingDate(), formatter);
+            // LocalDateTime endTime = LocalDateTime.parse(formattedDateTime);
 
             //long difference = ChronoUnit.MINUTES.between(startTime, endTime);
 
@@ -342,7 +340,7 @@ public class ProfileService {
             slots.setExitTime(formattedDateTime);
             slotsRepository.save(slots);
             return "";
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return "";
@@ -355,7 +353,7 @@ public class ProfileService {
         profile.setAllocatedSlotNumber("");
         profile.setEndtime(String.valueOf(0));
         profileRepository.save(profile);
-        JSONArray submissions =  jotFormSubmissionsHelper.getSubmissionId(slots.getSheetId());
+        JSONArray submissions = jotFormSubmissionsHelper.getSubmissionId(slots.getSheetId());
         for (int i = 0; i < submissions.length(); i++) {
             String submissionId = submissions.getJSONObject(i).getString("id");
             jotFormSubmissionsHelper.deleteForm(submissionId);

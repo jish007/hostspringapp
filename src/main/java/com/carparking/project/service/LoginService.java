@@ -52,10 +52,10 @@ public class LoginService {
         }
     }
 
-    public String logout(String emailid) {
-        Optional<User> login = loginRepository.findById(emailid);
-        login.get().setActive("INACTIVE");
-        loginRepository.save(login.get());
+    public String logout(String email) {
+        User login = loginRepository.findByEmail(email);
+        login.setActive("INACTIVE");
+        loginRepository.save(login);
         return "logout succesfull";
     }
 }

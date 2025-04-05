@@ -3,6 +3,7 @@ package com.carparking.project;
 import com.carparking.project.domain.ProfileDto;
 import com.carparking.project.entities.Profile;
 import com.carparking.project.entities.PropertyImageEntity;
+import com.carparking.project.service.LoginService;
 import com.carparking.project.service.ProfileService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class ProfileController {
 
     @Autowired
     private ProfileService profileService;
+
+    @Autowired
+    private LoginService loginService;
 
     @PostMapping("/save")
     public ResponseEntity<String> saveProfile(@RequestBody ProfileDto profileDto) throws Exception {
@@ -59,8 +63,8 @@ public class ProfileController {
     }
 
     @GetMapping("/sync")
-    public ResponseEntity<String> sync() throws Exception {
-        String status = profileService.updateProfile();
+    public ResponseEntity<String> sync(@RequestParam String adminMailId) throws Exception {
+        String status = profileService.updateProfile(adminMailId);
         return ResponseEntity.ok(status);
     }
 
@@ -68,6 +72,11 @@ public class ProfileController {
     @GetMapping("/leave")
     public ResponseEntity<String> leaveslot(@RequestParam String slotNumber) throws Exception {
         return ResponseEntity.ok(profileService.leaveSlotFlow(slotNumber));
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logOutUser(@RequestParam String emailId) throws Exception {
+        return ResponseEntity.ok(loginService.logout(emailId));
     }
 
 }
